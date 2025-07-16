@@ -28,6 +28,7 @@
       --secondary-light: #1d3461;
       --secondary-dark: #0a1128;
       --accent-color: #e74c3c;
+      --rose: rgba(255, 20, 147, 0.8);
       --accent-light: #ff6b6b;
       --accent-dark: #c0392b;
       --success-color: #2ecc71;
@@ -59,18 +60,7 @@
     }
 
     /* Light theme variables */
-    .light-theme {
-      --background-color: #f0f4f8;
-      --background-light: #ffffff;
-      --background-lighter: #e2e8f0;
-      --secondary-color: #334155;
-      --secondary-light: #475569;
-      --secondary-dark: #1e293b;
-      --text-color: #1e293b;
-      --text-secondary: #334155;
-      --text-tertiary: #64748b;
-      --card-background: rgba(255, 255, 255, 0.9);
-    }
+    
 
     * {
       margin: 0;
@@ -203,6 +193,30 @@
       justify-content: space-between;
       align-items: center;
     }
+    .header2 {
+              max-width: 800px;
+  margin: 0 auto 3rem;   /* <-- 0 en haut, auto à gauche/droite, 3rem en bas */
+  text-align: center;
+  z-index: 2;
+        }
+
+        .header2 h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-light), var(--rose));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: var(--font-secondary);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header2 p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
 
     .logo {
       font-family: var(--font-secondary);
@@ -297,6 +311,7 @@
     main {
       margin-top: 0;
     }
+    
 
     section {
       min-height: 100vh;
@@ -304,7 +319,11 @@
       position: relative;
       overflow: hidden;
     }
-
+    #projects,
+      .showcase-section {
+        min-height: auto;
+        padding: var(--spacing-4) 0;
+      }
     .section-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -457,6 +476,238 @@
       60% { transform: translateY(-5px); }
     }
 
+.showcase-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            z-index: 1;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-timing);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: var(--font-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--rose), var(--primary-light));
+            opacity: 0;
+            transition: opacity var(--transition-speed);
+            z-index: -1;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            color: var(--text-color);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-color);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .nav-btn.active::before {
+            opacity: 0.5;
+        }
+
+        .nav-btn .icon {
+            margin-right: 0.5rem;
+            transition: transform var(--transition-speed);
+        }
+
+        .nav-btn.active .icon {
+            transform: scale(1.2);
+        }
+
+        /* Contenu du Portfolio */
+        .portfolio-showcase {
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .showcase-section {
+  position: relative;            /* <-- plus absolute */
+  display: none;                 /* cachée par défaut */
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition:
+    opacity 0.6s var(--transition-timing),
+    transform 0.6s var(--transition-timing);
+}
+
+.showcase-section.active {
+  display: block;                /* affichée quand active */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .certificate-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all var(--transition-speed) var(--transition-timing);
+            height: 250px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .certificate-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+
+        .certificate-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.9), transparent);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: 
+                transform var(--transition-speed),
+                opacity var(--transition-speed);
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .certificate-card:hover .certificate-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .certificate-card:hover .certificate-image {
+            transform: scale(1.05);
+        }
+
+        .certificate-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .certificate-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        /* Section Technical Skills */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--transition-speed) var(--transition-timing);
+  perspective: 1000px;
+}
+
+.tech-icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-background);
+  border-radius: 50%;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  transition: all var(--transition-speed) var(--transition-timing);
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tech-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--rose), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+}
+
+.tech-item:hover .tech-icon {
+  transform: translateY(-10px) rotateY(20deg) scale(1.1);
+  box-shadow: 0 10px 20px rgba(255, 20, 147, 0.3);
+}
+
+.tech-item:hover .tech-icon::before {
+  opacity: 0.3;
+}
+
+.tech-name {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: color var(--transition-speed);
+}
+
+.tech-item:hover .tech-name {
+  color: var(--primary-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tech-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+}
+
+    
     /* About Section */
     #about {
       background-color: var(--background-light);
@@ -484,12 +735,23 @@
     }
 
     .about-image {
-      position: relative;
-      height: 400px;
-      overflow: hidden;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-    }
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  
+}
+
+.about-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
     .about-stats {
       display: grid;
@@ -533,6 +795,12 @@
       grid-template-columns: repeat(3, 1fr);
       gap: var(--spacing-4);
     }
+.traffic-light-thumb {
+  max-width: 400px;  /* or whatever exact width you want */
+  height: auto;
+  display: block;    /* removes any inline‐block gaps */
+  margin: 0 auto;    /* if you want it centered in its container */
+}
 
     .skill-category {
       background-color: var(--card-background);
@@ -598,7 +866,7 @@
 
     .projects-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: var(--spacing-4);
     }
 
@@ -615,10 +883,12 @@
     }
 
     .project-image {
-      height: 200px;
+      height: 300px;
       background-color: var(--background-lighter);
       position: relative;
       overflow: hidden;
+      object-position: center top; /* <-- This centers horizontally and aligns the top */
+  border-radius: 8px;
     }
 
     .project-image img {
@@ -1155,8 +1425,7 @@
   </div>
 
   <!-- Custom Cursor -->
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
+  
 
   <!-- Header -->
   <header>
@@ -1172,9 +1441,7 @@
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#contact" class="nav-link">Contact</a>
       </div>
-      <button class="theme-toggle">
-        <i class="fas fa-moon"></i>
-      </button>
+      
       <div class="menu-toggle">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -1192,7 +1459,10 @@
         <div class="home-content">
           <h1>Zakariae Bel Arbi</h1>
           <h2>Creative Developer</h2>
-          <p>Building immersive digital experiences at the intersection of design and technology. Specialized in interactive web applications and 3D visualizations.</p>
+<p>
+  Exploring the intersection of engineering, design, and technology through hands-on projects.  
+  Passionate about building interactive systems, connected prototypes, and intuitive digital experiences that bridge creativity and functionality.
+</p>
           <div class="cta-buttons">
             <a href="#projects" class="cta-button">View Projects</a>
             <a href="#contact" class="cta-button secondary">Contact Me</a>
@@ -1213,9 +1483,18 @@
         <h2 class="section-heading">About Me</h2>
         <div class="about-content">
           <div class="about-text">
-            <p>I'm a curious and determined creative developer, passionate about building meaningful and innovative digital solutions. As a student engineer at ENSAM Rabat, I specialize in UI/UX design and front-end development, blending aesthetics with functionality to solve real-world challenges.</p>
-<p>Through diverse projects in robotics, web development, and smart systems, I've developed a strong sense of teamwork and problem-solving. I enjoy working where design meets technology, crafting intuitive interfaces and connected platforms using modern tools.</p>
-<p>Beyond coding, I explore design tools, participate in hackathons and tech competitions, and thrive on learning new skills that expand my creative and technical capabilities.</p>
+            <p>
+  I'm a passionate and curious engineering student at ENSAM Rabat, driven by a strong interest in electronics, digital technologies, and smart systems.  
+  While I’m still exploring the many paths of electrical and embedded engineering, I enjoy learning by building—whether it's an interactive dashboard, a connected prototype, or a visual experience on the web.
+</p>
+<p>
+  Through academic projects, hackathons, and personal experimentation, I’ve touched a wide range of areas—from robotics to UI/UX design, real-time data visualization, and energy-efficient systems.  
+  I believe in the power of multidisciplinary creativity and love blending design with technology to solve real-world challenges.
+</p>
+<p>
+  As a future electrical engineer, I’m constantly evolving, learning new tools, and pushing my limits to grow both technically and creatively.  
+  This portfolio is a reflection of that journey—still in progress, but fueled by passion and purpose.
+</p>
 
             
             <div class="about-stats">
@@ -1224,7 +1503,7 @@
                 <div class="stat-label">Years Experience</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" id="projects-counter">5+</div>
+                <div class="stat-number" id="projects-counter">6+</div>
                 <div class="stat-label">Projects Completed</div>
               </div>
               <div class="stat-item">
@@ -1233,8 +1512,9 @@
               </div>
             </div>
           </div>
-          <div class="about-image" id="about-canvas"></div>
-        </div>
+          <div class="about-image">
+    <img src="about-image.jpg" alt="Zakariae Bel Arbi" loading="lazy">
+</div>
       </div>
     </section>
 
@@ -1332,28 +1612,28 @@
               <li class="skill-item">
                 <div class="skill-item-header">
                   <span class="skill-name">Raspberry Pi</span>
-                  <span class="skill-level">85%</span>
+                  <span class="skill-level">80%</span>
                 </div>
                 <div class="skill-bar">
-                  <div class="skill-progress" data-width="85"></div>
+                  <div class="skill-progress" data-width="80"></div>
                 </div>
               </li>
               <li class="skill-item">
                 <div class="skill-item-header">
                   <span class="skill-name">ESP 32</span>
-                  <span class="skill-level">75%</span>
+                  <span class="skill-level">90%</span>
                 </div>
                 <div class="skill-bar">
-                  <div class="skill-progress" data-width="75"></div>
+                  <div class="skill-progress" data-width="90"></div>
                 </div>
               </li>
               <li class="skill-item">
                 <div class="skill-item-header">
                   <span class="skill-name">Arduino</span>
-                  <span class="skill-level">80%</span>
+                  <span class="skill-level">90%</span>
                 </div>
                 <div class="skill-bar">
-                  <div class="skill-progress" data-width="80"></div>
+                  <div class="skill-progress" data-width="90"></div>
                 </div>
               </li>
               <li class="skill-item">
@@ -1370,126 +1650,425 @@
         </div>
       </div>
     </section>
-
+        
     <!-- Projects Section -->
     <section id="projects">
-      <div class="section-container">
-        <h2 class="section-heading">Awards & achievements</h2>
-        <div class="projects-container">
-          <div class="project-card">
-            <div class="project-image">
-              <img src="tswira_d_sbe3.jpg" alt="tswira" />
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">2st Prize -UPF Private university of Fes</h3>
-              <p class="project-desc">May 12, 2025
-                I won second place in the 8th edition of the national NURC competition organized by UPF, with an autonomous line-following robot capable of collecting and sorting waste by color.</p>
-            </div>
-          </div>
-            <div class="project-card">
+        <div class="section-container">
+              <div class="header2">
+                  <h1>Portfolio Showcase</h1>
+                  <p>Discover my projects, certifications, and technical skills through this immersive showcase</p>
+              </div>
+              
+              <div class="showcase-nav">
+                  <button class="nav-btn active" data-section="awards">
+                      <i class="fas fa-trophy icon"></i> Awards & Achievements
+                  </button>
+                  <button class="nav-btn" data-section="certificates">
+                      <i class="fas fa-certificate icon"></i> Certificates
+                  </button>
+                  <button class="nav-btn" data-section="tech">
+                      <i class="fas fa-code icon"></i> Technical skills
+                  </button>
+              </div>
+        <div class="portfolio-showcase">
+            <div id="awards" class="showcase-section active" >
+              <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-image">
+                      <img src="tswira_projet_inter.jpg" alt="LumiClear PMFC System">
+                    </div>
+                    <div class="project-content">
+                      <h3 class="project-title">LumiClear – Triple-Output PMFC System</h3>
+                      <p class="project-desc">
+                        February – June 2025  
+                        Designed and built an eco-friendly Plant Microbial Fuel Cell (PMFC) system using floating aquatic plants.  
+                        The system delivers three simultaneous outputs: electricity generation, significant wastewater purification, and accelerated plant growth — offering a sustainable, low-cost environmental solution.
+                      </p>
+                    </div>
+                </div>
+
+              <div class="project-card">
                 <div class="project-image">
-                  <img src="https://media.licdn.com/dms/image/v2/D4E22AQG8iHMCUNKPsw/feedshare-shrink_1280/B4EZZTHkqjHEAk-/0/1745151333971?e=1753315200&v=beta&t=68AL7aoBMhdw-uJHIx6BoyTbpqSqlJ5argWz6I66Guk">
+                  <img src="tswira_d_sbe3.jpg" alt="NURC robot">
                 </div>
                 <div class="project-content">
-                  <h3 class="project-title">Gitex Africa 2025 - Avril 2025</h3>
+                  <h3 class="project-title">2nd Prize – UPF National Robotics Competition</h3>
                   <p class="project-desc">
-                    Presented Smart Factory Pi, a fully autonomous quality control system using Raspberry Pi and image processing, with a smart dashboard for real-time analytics and alerts.
-                    </p>
+                    May 12, 2025  
+                    Achieved 2nd place at the 8th edition of the NURC organized by the Private University of Fes (UPF), with a fully autonomous robot that follows lines and intelligently collects and sorts waste by color.
+                  </p>
                 </div>
               </div>
-          <div class="project-card">
-            <div class="project-image">
-              <img src="https://media.licdn.com/dms/image/v2/D4E22AQELHeX7N668fQ/feedshare-shrink_800/B4EZVmfbncHUAg-/0/1741181291215?e=1753315200&v=beta&t=Es7pfSfTH_16FggQzcdmVq88Fdr3umfCs69wG4O3VGo">
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">2nd Prize - Industry 4.0 Hackathon</h3>
-              <p class="project-desc">
-                February 25-28, 2025.
-                Organized by Aytoo and Innovlab Technologie. Developed innovative Raspberry Pi-based solutions for Industry 4.0, creating a professional dashboard using front-end development and WebSocket protocol.</p>
-              
-            </div>
-          </div>
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="traffic_light.png"
+                      class="traffic-light-thumb"
+                      alt="Traffic Light Detection AI">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">AI Project – Traffic Light Detection</h3>
+                  <p class="project-desc">
+                    March 2025  
+                    Trained and deployed a YOLOv8-based object detection model capable of identifying traffic lights under diverse conditions.  
+                    Integrated as part of a smart traffic simulation system using real-time computer vision to optimize light timing and traffic flow.
+                  </p>
+                </div>
+              </div>
 
-          <div class="project-card">
-            <div class="project-image">
-              <img src="https://media.licdn.com/dms/image/v2/D4E22AQHD42Steguekw/feedshare-shrink_800/B4EZQPGb9kHEAs-/0/1735420163504?e=1753315200&v=beta&t=wQsIxblfqyOBtD41hNRRV6EDVhpymPnRN546nQzMB6w">
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">2nd Prize - Innovation Camp</h3>
-              <p class="project-desc">December 25, 2024
-                Organized by Crédit Agricole du Maroc and Injaz Al-Maghrib. Developed an innovative smart probe prototype addressing major challenges in Moroccan agriculture.</p>
-            </div>
-          </div>
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="tswira_gitex2.jpg" alt="Gitex Africa">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">Gitex Africa 2025 – Smart Factory Pi</h3>
+                  <p class="project-desc">
+                    May 2025  
+                    Presented "Smart Factory Pi" at GITEX Africa – an intelligent quality control system using Raspberry Pi and real-time image processing. Includes a smart dashboard for analytics, alerts, and anomaly detection.
+                  </p>
+                </div>
+              </div>
 
-          <div class="project-card">
-            <div class="project-image">
-              <img src="https://media.licdn.com/dms/image/v2/D4E22AQGuDrihyakz6Q/feedshare-shrink_1280/B4EZUlbYSRGYAk-/0/1740089757768?e=1753315200&v=beta&t=ZSkHpIbe0O6zHZ1PuBOKXIqduuz5LcLy3U0k4aneKuY">
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">ENSAM Rabat Robotics Competition</h3>
-              <p class="project-desc">December 17, 2024 - February 16, 2025
-                Designed and programmed a WiFi and Bluetooth-controlled soccer-playing robot using ESP32.</p>
-            </div>
-          </div>
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="tswira_hackthon 4.0.jpg" alt="Hackathon Industry 4.0">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">2nd Prize – Industry 4.0 Hackathon</h3>
+                  <p class="project-desc">
+                    February 25–28, 2025  
+                    Organized by Aytoo and InnovLab Technologies. Developed an innovative solution for smart factories using Raspberry Pi, real-time dashboards, and WebSocket communication.
+                  </p>
+                </div>
+              </div>
 
-          <div class="project-card">
-            <div class="project-image">
-              <img src="https://media.licdn.com/dms/image/v2/D4E22AQGggIpMjtY8uw/feedshare-shrink_1280/B4EZUlbYRgH0Ak-/0/1740089755910?e=1753315200&v=beta&t=q-3LgvFqPrz8-UDgF-maH64GU4RV61-nQelybfqBJN0">
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">1st Prize - Star Cup ENSAM Rabat</h3>
-              <p class="project-desc">December 17, 2024 - February 16, 2025
-                Awarded as the best designer and media manager in the competition.</p>
-            </div>
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="tswira hackathon injaaz.jpeg" alt="Innovation Camp">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">2nd Prize – Innovation Camp</h3>
+                  <p class="project-desc">
+                    December 25, 2024  
+                    Organized by Crédit Agricole du Maroc and Injaz Al-Maghrib. Designed a smart agricultural probe to address water optimization and soil monitoring in Moroccan agriculture.
+                  </p>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="robot emc.png" alt="ENSAM Robotics">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">ENSAM Rabat – Robotics Competition</h3>
+                  <p class="project-desc">
+                    December 17, 2024 – February 16, 2025  
+                    Designed, built, and programmed a football-playing robot using an ESP32 microcontroller, controlled via Wi-Fi and Bluetooth protocols.
+                  </p>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-image">
+                  <img src="tswira_roboticore.jpg" alt="Star Cup ENSAM">
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">1st Prize – Star Cup ENSAM Rabat</h3>
+                  <p class="project-desc">
+                    December 17, 2024 – February 16, 2025  
+                    Awarded Best Designer and Media Manager for outstanding contributions to branding, design, and communication during the Star Cup competition.
+                  </p>
+                </div>
+              </div>
           </div>
         </div>
-      </div>
-    </section>
+    </div>
 
+<div class="showcase-section" id="certificates">
+            <div class="certificates-grid">
+  <!-- SolidWorks -->
+  <div class="certificate-card">
+    <img src="Certificate Solide Works.jpg" alt="SolidWorks Designer Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Certified SolidWorks Designer</h3>
+      <p>Completed the “SolidWorks from Zero to Certified” training program with SWUG Morocco.</p>
+    </div>
+  </div>
+
+  <!-- Industry 4.0 Hackathon 2nd Prize -->
+  <div class="certificate-card">
+    <img src="Certificat of 2nd prize in industrie 4.0 hackathon .jpg" alt="Industry 4.0 Hackathon Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>2nd Prize – Industry 4.0 Hackathon</h3>
+      <p>Awarded second prize at the Industry 4.0 Hackathon by Aytoo &amp; InnovLab Technologies (Feb 25–28, 2025).</p>
+    </div>
+  </div>
+
+  <!-- UPF National Robotics Competition 2nd Prize -->
+  <div class="certificate-card">
+    <img src="Certificat_of_2nd_prize_in_UPF_competition_-removebg-preview.png" alt="UPF Robotics Competition Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>2nd Prize – UPF National Robotics Competition</h3>
+      <p>Achieved second place at the 8th NURC competition (UPF) with an autonomous waste-sorting robot (May 12, 2025).</p>
+    </div>
+  </div>
+
+  <!-- UPF National Robotics Competition Participation -->
+  <div class="certificate-card">
+    <img src="Certificat_of_participation_in_UPF_competition_-removebg-preview.png" alt="UPF Competition Participation Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Participation – UPF National Robotics Competition</h3>
+      <p>Certificate of participation in the 8th edition of the NURC at the Private University of Fes.</p>
+    </div>
+  </div>
+
+  <!-- Innovation Camp 2nd Prize -->
+  <div class="certificate-card">
+    <img src="Certificate of participating in _INNOVATION CAMP).jpg" alt="Innovation Camp Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>2nd Prize – Innovation Camp</h3>
+      <p>Awarded second prize at the Innovation Camp organized by Crédit Agricole du Maroc &amp; Injaz Al-Maghrib (Dec 25, 2024).</p>
+    </div>
+  </div>
+
+  <!-- Python Programming Certificate -->
+  <div class="certificate-card">
+    <img src="Certificate of completion the course of Python.png" alt="Python Programming Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Python Programming Certificate</h3>
+      <p>Completed the official Python course on Kaggle, demonstrating proficiency in core programming and libraries (Jan 23, 2025).</p>
+    </div>
+  </div>
+
+  <!-- Data Science Foundations Certificate -->
+  <div class="certificate-card">
+    <img src="Certificate of completion the course of Data Science Foundations.jpg" alt="Data Science Foundations Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Data Science Foundations Certificate</h3>
+      <p>Completed the Data Science Foundations track on Kaggle, covering data analysis and ML basics.</p>
+    </div>
+  </div>
+
+  <!-- ESP32 Workshop Certificate -->
+  <div class="certificate-card">
+    <img src="certificat of achievement of esp-32 workshop.jpg" alt="ESP32 Workshop Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>ESP32 Workshop Certificate</h3>
+      <p>Certificate of achievement for the ESP32 microcontroller workshop on IoT prototyping.</p>
+    </div>
+  </div>
+
+  <!-- Introduction to Programming Certificate -->
+  <div class="certificate-card">
+    <img src="Certificate (Intro to Programming).png" alt="Introduction to Programming Certificate" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Introduction to Programming Certificate</h3>
+      <p>Certificate of completion for the introductory programming course, covering fundamentals of algorithms and coding.</p>
+    </div>
+  </div>
+
+  <!-- Baccalaureate Diploma -->
+  <div class="certificate-card">
+    <img src="Baccalaureate Certificate.jpg" alt="Baccalaureate Diploma" class="certificate-image">
+    <div class="certificate-overlay">
+      <h3>Baccalaureate Diploma</h3>
+      <p>High school baccalaureate diploma, marking the successful completion of secondary education.</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="showcase-section" id="tech">
+  <div class="tech-grid">
+
+    <!-- Programming languages -->
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fab fa-python"></i></div>
+      <div class="tech-name">Python</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-code"></i></div>
+      <div class="tech-name">C</div>
+    </div>
+
+    <!-- Web languages -->
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fab fa-html5"></i></div>
+      <div class="tech-name">HTML5</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fab fa-css3-alt"></i></div>
+      <div class="tech-name">CSS3</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fab fa-js-square"></i></div>
+      <div class="tech-name">JavaScript</div>
+    </div>
+
+
+    <!-- Embedded & IoT -->
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fab fa-raspberry-pi"></i></div>
+      <div class="tech-name">Raspberry Pi</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-microchip"></i></div>
+      <div class="tech-name">Arduino</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-microchip"></i></div>
+      <div class="tech-name">ESP32</div>
+    </div>
+
+    <!-- CAD & electrical design -->
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-cube"></i></div>
+      <div class="tech-name">SolidWorks</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-cube"></i></div>
+      <div class="tech-name">CATIA</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-cogs"></i></div>
+      <div class="tech-name">Multisim</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon"><i class="fas fa-bolt"></i></div>
+      <div class="tech-name">CadeSimu</div>
+    </div>
+
+    <!-- Design tools -->
+<div class="tech-item">
+  <div class="tech-icon"><i class="fas fa-paint-brush"></i></div>
+  <div class="tech-name">Photoshop</div>
+</div>
+<div class="tech-item">
+  <div class="tech-icon"><i class="fas fa-palette"></i></div>
+  <div class="tech-name">Canva</div>
+</div>
+
+  </div>
+</div>
+</div>
+</div>
+    </section>
     <!-- Experience Section -->
     <section id="experience">
-      <div class="section-container">
-        <h2 class="section-heading">Activities</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3 class="timeline-title">Frontend Developer</h3>
-              <h4 class="timeline-subtitle">Aytoo & Innovlab Technology</h4>
-              <p class="timeline-desc">Led the development of interactive data visualization tools and 3D web applications. Designing a dashboard for the project "Smart Factory Pi" showcased in gitex Africa 2025.</p>
-            </div>
-            <div class="timeline-date"> May 2025 - Present</div>
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3 class="timeline-title">Responsable media</h3>
-              <h4 class="timeline-subtitle">Ensam Makers Competition</h4>
-              <p class="timeline-desc">Won First Prize as Best Designer and Media Manager during the Star Cup competition at ENSAM Rabat.</p>
-            </div>
-            <div class="timeline-date">February-16-2025</div>
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3 class="timeline-title">CAD Designer</h3>
-              <h4 class="timeline-subtitle">Morocco SolidWorks User Group SWUG</h4>
-              <p class="timeline-desc">Certified from SWUG for accomplishing the course of SolidWorks from zero to certified</p>
-            </div>
-            <div class="timeline-date">February-3-2025</div>
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3 class="timeline-title">Python programmer</h3>
-              <h4 class="timeline-subtitle">Kaggle</h4>
-              <p class="timeline-desc">Certified by Kaggle for completing the Python course, demonstrating my proficiency in Python and its libraries.</p>
-            </div>
-            <div class="timeline-date">January-23-2025</div>
-            <div class="timeline-dot"></div>
-          </div>
+  <div class="section-container">
+    <h2 class="section-heading">Activities</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">Eco-Innovation Developer</h3>
+          <h4 class="timeline-subtitle">LumiClear – PMFC Project</h4>
+          <p class="timeline-desc">
+            Created a bioelectrochemical system using floating aquatic plants to simultaneously purify wastewater, generate electricity, and support plant growth.
+          </p>
         </div>
+        <div class="timeline-date">June 2025</div>
+        <div class="timeline-dot"></div>
       </div>
-    </section>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">2nd Prize – UPF Robotics Competition</h3>
+          <h4 class="timeline-subtitle">Université Privée de Fès</h4>
+          <p class="timeline-desc">
+            Built an autonomous robot that detects, collects, and sorts waste by color. Won 2nd place and received a 3000 MAD prize during the 8th edition of the national NURC competition.
+          </p>
+        </div>
+        <div class="timeline-date">May 12, 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">Smart Factory Pi – Gitex Africa</h3>
+          <h4 class="timeline-subtitle">Aytoo & Innovlab Technology</h4>
+          <p class="timeline-desc">
+            Presented an industrial quality control system using Raspberry Pi and computer vision for real-time defect detection, showcased at Gitex Africa 2025.
+          </p>
+        </div>
+        <div class="timeline-date">May 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">2nd Prize – Industry 4.0 Hackathon</h3>
+          <h4 class="timeline-subtitle">Aytoo & Innovlab Technology</h4>
+          <p class="timeline-desc">
+            Co-developed a smart factory simulation with a dashboard connected to Raspberry Pi using WebSocket. Recognized for real-time industrial monitoring and UI design.
+          </p>
+        </div>
+        <div class="timeline-date">Feb 25–28, 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">2nd Prize – Innovation Camp</h3>
+          <h4 class="timeline-subtitle">Crédit Agricole du Maroc & Injaz Al-Maghrib</h4>
+          <p class="timeline-desc">
+            Designed an intelligent probe for Moroccan agriculture to optimize irrigation. Won 2nd place in a national innovation challenge.
+          </p>
+        </div>
+        <div class="timeline-date">December 25, 2024</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">1st Prize – ENSAM Makers Competition</h3>
+          <h4 class="timeline-subtitle">Star Cup – ENSAM Rabat</h4>
+          <p class="timeline-desc">
+            Awarded Best Designer and Media Manager for leading visual content, branding, and media coverage throughout the Star Cup competition.
+          </p>
+        </div>
+        <div class="timeline-date">Dec 2024 – Feb 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">Certified SolidWorks Designer</h3>
+          <h4 class="timeline-subtitle">SWUG Morocco</h4>
+          <p class="timeline-desc">
+            Successfully completed the "SolidWorks from Zero to Certified" training program organized by the Morocco SolidWorks User Group.
+          </p>
+        </div>
+        <div class="timeline-date">February 3, 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">Python Programming Certificate</h3>
+          <h4 class="timeline-subtitle">Kaggle</h4>
+          <p class="timeline-desc">
+            Completed Kaggle’s official Python course, demonstrating proficiency in core programming concepts and Python libraries.
+          </p>
+        </div>
+        <div class="timeline-date">January 23, 2025</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 class="timeline-title">Student Delegate</h3>
+          <h4 class="timeline-subtitle">ENSAM Rabat</h4>
+          <p class="timeline-desc">
+            Represented peers during the preparatory cycle. Acted as a communication bridge with administration and helped coordinate student-led initiatives.
+          </p>
+        </div>
+        <div class="timeline-date">Sept 2024 – Present</div>
+        <div class="timeline-dot"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
     <!-- Contact Section -->
     <section id="contact">
@@ -1535,7 +2114,7 @@
               </div>
               <div class="contact-text">
                 <div class="contact-label">Phone</div>
-                <div class="contact-value">+212 705-112576</div>
+                <div class="contact-value">+212 697997953</div>
               </div>
             </div>
           </div>
@@ -1577,7 +2156,16 @@
       <div class="footer-social">
         <a href="https://github.com/Zakariae-Belarbi" class="social-icon"><i class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/zakariae-bel-arbi-a766a6314" class="social-icon"><i class="fab fa-linkedin"></i></a>
-        <a href="+212705112576" class="social-icon"><i class="fas fa-phone"></i></a>
+        <a href="+212697997953" class="social-icon"><i class="fas fa-phone"></i></a>
+        <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=belarbizakaria18@gmail.com"
+  class="social-icon"
+  target="_blank"
+  rel="noopener"
+  title="Email Me">
+  <i class="fas fa-envelope"></i>
+</a>
+
         <a href="https://www.instagram.com/z_a_k_a_r_i_a_e/" class="social-icon"><i class="fab fa-instagram"></i></a>
       </div>
       <div class="footer-text">
@@ -1591,14 +2179,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize components
-      setupCursorEffects();
       initHeroBackground();
       initAbout3DVisual();
       setupScrollEffects();
       setupSkillsAnimation();
       setupTypingEffect();
       setupMobileMenu();
-      setupThemeToggle();
       animateStats();
       setupFormHandling();
 
@@ -1806,56 +2392,18 @@
   let scene, camera, renderer, crystal, stars;
   const clock = new THREE.Clock();
 
-  init();
-  animate();
+  
 
-  function init() {
-    scene = new THREE.Scene();
-
-    // Camera position centrée
-    camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(0, 0, 4); // Plus centré
-
-    // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+  
 
     // Cristal géométrique (Icosaèdre)
-    const geometry = new THREE.IcosahedronGeometry(1, 0);
-
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x00fff7,
-      transparent: true,
-      opacity: 0.35,
-      metalness: 0.6,
-      roughness: 0.2,
-      emissive: 0x00ffff,
-      emissiveIntensity: 0.4
-    });
-
-    crystal = new THREE.Mesh(geometry, material);
-    crystal.position.set(0, 0, 0);
-    scene.add(crystal);
+    
 
     // Contour lumineux (wireframe)
-    const wireframe = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry),
-      new THREE.LineBasicMaterial({ color: 0xffffff })
-    );
-    crystal.add(wireframe);
+    
 
     // Étoiles de fond
-    stars = createStarField();
-    scene.add(stars);
-
-    // Lumière d'ambiance et point light coloré
-    scene.add(new THREE.AmbientLight(0x222222));
-
-    const pointLight = new THREE.PointLight(0xff66cc, 2, 10);
-    pointLight.position.set(2, 3, 2);
-    scene.add(pointLight);
-
+    
     // Resize responsive
     window.addEventListener('resize', onWindowResize);
   }
@@ -1897,7 +2445,7 @@
 
     renderer.render(scene, camera);
   }
-}
+
 
 initAbout3DVisual();
 
@@ -2157,6 +2705,42 @@ initAbout3DVisual();
           alert('Failed to send the message. Please try again.\n' + JSON.stringify(error));
         });
     });
+    document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.showcase-section');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Mettre à jour les boutons actifs
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Changer la section visible
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === targetSection) {
+                            setTimeout(() => {
+                                section.classList.add('active');
+                            }, 50);
+                        }
+                    });
+                });
+            });
+            
+            // Effet de halo sur les boutons au survol
+            navButtons.forEach(button => {
+                button.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    this.style.setProperty('--x', `${x}px`);
+                    this.style.setProperty('--y', `${y}px`);
+                });
+            });
+        });
   </script>
 </body>
 </html>
