@@ -2269,69 +2269,76 @@
       animate();
 
       function init() {
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
-        camera.position.z = 1000;
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+  camera.position.z = 1000;
 
-        scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x0a1128, 0.0007);
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a1128, 0.0007);
 
-        geometry = new THREE.BufferGeometry();
-        const vertices = [];
+  geometry = new THREE.BufferGeometry();
+  const vertices = [];
 
-        const textureLoader = new THREE.TextureLoader();
-        const sprite = textureLoader.load('https://threejs.org/examples/textures/sprites/disc.png');
+  const textureLoader = new THREE.TextureLoader();
+  const sprite = textureLoader.load('https://threejs.org/examples/textures/sprites/disc.png');
 
-        for (i = 0; i < 1000; i++) {
-          const x = Math.random() * 2000 - 1000;
-          const y = Math.random() * 2000 - 1000;
-          const z = Math.random() * 2000 - 1000;
+  // ↓↓↓ moins de points : 300 desktop, 120 mobile
+  const IS_MOBILE = window.innerWidth < 768;
+  const COUNT = IS_MOBILE ? 120 : 300;
 
-          vertices.push(x, y, z);
-        }
+  for (let i = 0; i < COUNT; i++) {
+    const x = Math.random() * 2000 - 1000;
+    const y = Math.random() * 2000 - 1000;
+    const z = Math.random() * 2000 - 1000;
+    vertices.push(x, y, z);
+  }
 
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
-        parameters = [
-          [[1.0, 0.2, 0.5], 20],
-          [[0.95, 0.1, 0.5], 15],
-          [[0.90, 0.05, 0.5], 10],
-          [[0.85, 0, 0.5], 8],
-          [[0.80, 0, 0.5], 5]
-        ];
+  // ↓↓↓ moins de couches (3 au lieu de 5) et un peu de transparence
+  parameters = [
+    [[1.0, 0.2, 0.5], 18, 0.7],
+    [[0.9,  0.1, 0.5], 12, 0.5],
+    [[0.85, 0.0, 0.5],  7, 0.4],
+  ];
 
-        for (i = 0; i < parameters.length; i++) {
-          color = parameters[i][0];
-          size = parameters[i][1];
+  materials = [];
+  for (let i = 0; i < parameters.length; i++) {
+    const color = parameters[i][0];
+    const size  = parameters[i][1];
+    const alpha = parameters[i][2];
 
-          materials[i] = new THREE.PointsMaterial({
-            size: size,
-            map: sprite,
-            blending: THREE.AdditiveBlending,
-            depthTest: false,
-            transparent: true
-          });
-          materials[i].color.setRGB(color[0], color[1], color[2]);
+    const mat = new THREE.PointsMaterial({
+      size,
+      map: sprite,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      depthWrite: false,
+      transparent: true,
+      opacity: alpha
+    });
+    mat.color.setRGB(color[0], color[1], color[2]);
 
-          particles = new THREE.Points(geometry, materials[i]);
+    const pts = new THREE.Points(geometry, mat);
+    pts.rotation.x = Math.random() * 6;
+    pts.rotation.y = Math.random() * 6;
+    pts.rotation.z = Math.random() * 6;
+    scene.add(pts);
+    materials.push(mat);
+  }
 
-          particles.rotation.x = Math.random() * 6;
-          particles.rotation.y = Math.random() * 6;
-          particles.rotation.z = Math.random() * 6;
+  renderer = new THREE.WebGLRenderer({ alpha: true });
+  // ↓↓↓ évite de surcharger le GPU sur écrans très denses
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
 
-          scene.add(particles);
-        }
+  document.addEventListener('mousemove', onDocumentMouseMove, false);
+  document.addEventListener('touchstart', onDocumentTouchStart, false);
+  document.addEventListener('touchmove', onDocumentTouchMove, false);
 
-        renderer = new THREE.WebGLRenderer({ alpha: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
+  window.addEventListener('resize', onWindowResize, false);
+}
 
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        document.addEventListener('touchstart', onDocumentTouchStart, false);
-        document.addEventListener('touchmove', onDocumentTouchMove, false);
-
-        window.addEventListener('resize', onWindowResize, false);
-      }
 
       function onWindowResize() {
         windowHalfX = window.innerWidth / 2;
@@ -2746,6 +2753,7 @@ initAbout3DVisual();
   </script>
 </body>
 </html>
+
 
 
 
